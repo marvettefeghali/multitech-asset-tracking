@@ -1,0 +1,14 @@
+var device = require("device")
+var log = require("log");
+log.setLevel("INFO");
+
+
+var accountKey = request.account.accountKey;
+var getDevice = device.get(request.user.id);
+if(getDevice.metadata.status == "success"){
+    var authToken = getDevice.result["auth_token"];
+     
+    var editorUrl = "https://embedded.scriptr.io?menu=0&tree=0&toolbar=1&console=0&editor=SimpleDecisionTable&auth_token="+authToken+"&name=asset-tracking/entities/rules/alerts";
+	return editorUrl
+}
+    

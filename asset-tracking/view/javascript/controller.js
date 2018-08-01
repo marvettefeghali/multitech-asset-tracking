@@ -103,5 +103,27 @@ myApp.controller('dashboardCtrl', function($scope, $timeout, wsClient, httpClien
 });
 
 
+myApp.controller('rulesCtrl', function($scope, $timeout, wsClient, httpClient, headerItemsJson, menuItemsJson, $window, $location, mapConstants, $sce, $routeParams) {
+    var vm = this;
+    vm.showEditor = false
+    vm.init = function(){
+         vm.loadEditor()
+    }
+    
+     vm.loadEditor = function() {
+        vm.rulesrc = null;
+        vm.showEditor = false
+    	httpClient.get("asset-tracking/api/rules/getEditor", null).then(function(data, response) {
+            vm.rulesrc = $sce.trustAsResourceUrl(data);
+             $timeout(function() {
+                vm.showEditor = true;
+             }, 3000)
+        },
+        function(err) {
+            console.log('ERROR', error);
+        });
+    }
+});
+
 
 

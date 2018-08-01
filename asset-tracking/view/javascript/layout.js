@@ -5,7 +5,8 @@ var menuItems = {
   "mainMenu": "menu1",
   "menu1": [
     {"id":"1", "iconClass":"fa fa-map", "label": "Map", "route":"#/main", "active":"true"},
-    {"id":"2", "iconClass":"fa fa-warning", "label": "Alerts", "route":"#/alerts", "active":"false"}
+    {"id":"2", "iconClass":"fa fa-warning", "label": "Alerts", "route":"#/alerts", "active":"false"},
+    {"id":"3", "iconClass":"fa fa-gear", "label": "Rules", "route":"#/rules", "active":"false"}
   ]
 }; 
 
@@ -21,6 +22,7 @@ var routingItems = {
   "params": [
     {"route": "/", "template": "/asset-tracking/view/html/views/main/main.html", "controller": "mapCtrl as vm"},
     {"route": "main", "template": "/asset-tracking/view/html/views/main/main.html", "controller": "mapCtrl as vm"},
+    {"route": "rules", "template": "/asset-tracking/view/html/views/main/rules.html","controller": "rulesCtrl as vm"},
     {"route": "dashboard/deviceId/:deviceId*", "template": "/asset-tracking/view/html/views/main/dashboard.html","controller": "dashboardCtrl as vm"},
     {"route": "alerts", "template": "/asset-tracking/view/html/views/alerts/alerts.html"},
     {"route": "logout", "template": "/asset-tracking/view/html/logout.html"}
