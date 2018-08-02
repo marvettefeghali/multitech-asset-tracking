@@ -10,8 +10,10 @@ var pubsub = require("pubsub");
 var stores = require("store");
 var schema = require("schema");
 var devices = require("device");
+var group = require("group");
 var subdomain = require("subdomain");
 var configuration = require("configuration");
+
 
 /** SETUP ADVANCED APP REQUIRED CHANNELS IF NOT EXIST **/
 
@@ -61,12 +63,18 @@ responseObject["schemaCreation_multitech_alert"] = JSON.stringify(step5);
 var step6 = schema.create("multitech_latest_event",multitech_latest_event_schema);
 responseObject["schemaCreation_multitech_latest_event"] = JSON.stringify(step6);
 
+
+/** SETUP ADVANCED APP EDITOR GROUP **/
+var step10= group.create("editor");
+responseObject["groupCreation_editor"] = JSON.stringify(step10);
+
 /** SETUP ADVANCED APP DEMO DEVICE  **/
 
 var params = {
     "id":"demo",
     "password" : "demo",
     "name" : "demo",
+    "groups":"editor"
     
 };
 var step7= devices.save(params);
