@@ -11,7 +11,7 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
 
   $templateCache.put('/UIComponents/dashboard/frontend/components/grid/grid.html',
-    "<div class=filter-bar><div class={{$ctrl.class}}><form><div ng-show=\"$ctrl.enableClientSideFilter && $ctrl.mode == 'normal'\" class=\"form-group col-xs-12 col-sm-4 pdr0\"><div class=form-group><input class=form-control ng-change=$ctrl.onFilterChanged() ng-model=$ctrl.quickFilterValue placeholder=\"Client filter\"></div></div><div ng-show=\"$ctrl.enableServerSideFilter && $ctrl.mode == 'infinite'\" class=\"form-group col-xs-12 col-sm-4 pdr0\"><div class=form-group><input class=form-control ng-change=$ctrl.onServerFilterChanged() ng-model=$ctrl.serverFilterText placeholder=\"Device filter\"></div></div><div class=\"col-xs-12 col-sm-4 pull-right text-right\"><button ng-hide={{$ctrl.enableDeleteRow}} ng-click=$ctrl.openConfirmationPopUp() class=\"btn btn-default mt4\" tooltip-placement=left uib-tooltip=\"Delete selected row\"><i class=\"fa fa-close\" aria-hidden=true></i></button> <button ng-hide={{$ctrl.enableAddRow}} ng-click=$ctrl.onAddRow() class=\"btn btn-warning mt4\" tooltip-placement=bottom uib-tooltip=\"Insert row\"><i class=\"fa fa-plus\" aria-hidden=true></i></button></div></form></div></div><div class=col-xs-12 ng-show=$ctrl.showError><div class=alert ng-class=\"'alert-' + ( $ctrl.message.type || 'warning')\">{{$ctrl.message.content}}</div></div><div class=clearfix></div><div class=col-xs-12><div ag-grid=$ctrl.gridOptions class=ag-bootstrap ng-style=$ctrl.style></div></div>"
+    "<div class=filter-bar><div class={{$ctrl.class}}><form><div ng-show=\"$ctrl.enableClientSideFilter && $ctrl.mode == 'normal'\" class=\"form-group col-xs-12 col-sm-4 pdr0\"><div class=form-group><input class=form-control ng-change=$ctrl.onFilterChanged() ng-model=$ctrl.quickFilterValue placeholder=\"Client filter\"></div></div><div ng-show=\"$ctrl.enableServerSideFilter && $ctrl.mode == 'infinite'\" class=\"form-group col-xs-12 col-sm-4 pdr0\"><div class=form-group><input class=form-control ng-change=$ctrl.onServerFilterChanged() ng-model=$ctrl.serverFilterText placeholder=\"Server filter\"></div></div><div class=\"col-xs-12 col-sm-4 pull-right text-right\"><button ng-hide={{$ctrl.enableDeleteRow}} ng-click=$ctrl.openConfirmationPopUp() class=\"btn btn-default mt4\" tooltip-placement=left uib-tooltip=\"Delete selected row\"><i class=\"fa fa-close\" aria-hidden=true></i></button> <button ng-hide={{$ctrl.enableAddRow}} ng-click=$ctrl.onAddRow() class=\"btn btn-warning mt4\" tooltip-placement=bottom uib-tooltip=\"Insert row\"><i class=\"fa fa-plus\" aria-hidden=true></i></button></div></form></div></div><div class=col-xs-12 ng-show=$ctrl.showError><div class=alert ng-class=\"'alert-' + ( $ctrl.message.type || 'warning')\">{{$ctrl.message.content}}</div></div><div class=clearfix></div><div class=col-xs-12><div ag-grid=$ctrl.gridOptions class=ag-bootstrap ng-style=$ctrl.style></div></div>"
   );
 
 
@@ -21,100 +21,194 @@ var cachedTemplates = (["$templateCache", function($templateCache) {  'use stric
 
 
   $templateCache.put('/UIComponents/dashboard/frontend/components/map/map.html',
-    "<div style=\"height: 90%;\"> \n" +
-    "    <section class=\"map-wrap\" ng-if=\"$ctrl.clusteredView == true || $ctrl.showDetailedMap == false\">\n" +
-    "        <ng-map id=\"{{'clustered-'+$ctrl.$wdgid}}\" on-zoom_changed=\"$ctrl.onClusteredZoomChanged();\"\n" +
-    "                single-info-window=\"true\" zoom-to-inlude-markers=\"true\"\n" +
-    "                center=\"{{$ctrl.mapcenter || $ctrl.defaultCenter}}\"\n" +
-    "                zoom=\"{{$ctrl.clusterZoom}}\">\n" +
-    "            <heatmap-layer ng-if=\"$ctrl.heatmap\"></heatmap-layer>\n" +
-    "        </ng-map>\n" +
-    "          <div  class=\"heatmap\" ng-if=\"$ctrl.heatmap == true\">\n" +
-    "                <h5>Enable Heatmap</h5>\n" +
-    "                  <span>\n" +
-    "                    <scriptr-toggle-switch resize=\"false\" on-switch-change=\"$ctrl.activateHeatMap\" switch-status=\"$ctrl.switchStatus\"class=\"switch-success switch-small\"></scriptr-toggle-switch>\n" +
-    "                  </span>\n" +
-    "        </div>\n" +
-    "    </section>\n" +
-    "	<section class=\"map-wrap\" ng-if=\"$ctrl.clusteredView == false || $ctrl.showDetailedMap == true\">\n" +
-    "		<ng-map id=\"{{'detailed-'+$ctrl.$wdgid}}\" on-zoom_changed=\"$ctrl.onDetailedZoomChanged();\"\n" +
-    "			single-info-window=\"true\" zoom-to-inlude-markers=\"true\"\n" +
-    "			center=\"{{$ctrl.mapcenter || $ctrl.defaultcenter}}\"\n" +
-    "			zoom=\"{{$ctrl.detailedmapzoom}}\">\n" +
-    "            <drawing-manager ng-if=\"$ctrl.geofenceManager == true\"\n" +
-    "                on-overlaycomplete=\"$ctrl.onMapOverlayCompleted()\"\n" +
-    "                drawing-control-options=\"{{$ctrl.drawingOptions}}\"\n" +
-    "                drawingControl=\"{{$ctrl.drawingControl}}\"\n" +
-    "                drawingMode=\"null\"\n" +
-    "                rectangleOptions=\"{{$ctrl.overlaySettings}}\"\n" +
-    "               >\n" +
-    "              </drawing-manager>\n" +
-    "		<div>\n" +
-    "			<div ng-repeat=\"(key, asset) in $ctrl.displayedAssets\">\n" +
-    "				<shape name=\"polyline\" path=\"{{asset.path}}\"\n" +
-    "					stroke-color=\"{{asset.pathColor}}\"\n" +
-    "					stroke-opacity=\"{{asset.strokeOpacity}}\"\n" +
-    "					stroke-width=\"{{asset.strokeWeight}}\" icons=\"{{asset.pathIcon}}\">\n" +
-    "				</shape>\n" +
-    "				<div ng-repeat=\"marker in asset.markers track by $index\">\n" +
-    "					<div ng-if=\"$ctrl.trackedAsset == null\">\n" +
-    "						<marker position=\"{{marker.position}}\" title=\"{{marker.display}}\" animation={{marker.animation}}\n" +
-    "							icon=\"{{marker.icon}}\"\n" +
-    "							on-click=\"$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')\">\n" +
-    "						</marker>\n" +
-    "					</div>\n" +
-    "					<div ng-if=\"$ctrl.trackedAsset !=null\">\n" +
-    "						<marker position=\"{{marker.position}}\" title=\"{{marker.title}}\" animation={{marker.animation}}\n" +
-    "							icon=\"{{marker.icon}}\" clickable=\"false\">\n" +
-    "					</div>\n" +
-    "				</div>\n" +
-    "				<!-- end trip markers loop -->\n" +
-    "			</div>\n" +
-    "		</div>\n" +
-    "        <div ng-if=\"$ctrl.selectedAsset != null && $ctrl.markerInfoWindow == true\"  >\n" +
-    "			<div ng-transclude></div>\n" +
-    "          	<info-window id=\"{{'infoWindowTemplate_default_'+$ctrl.$wdgid}}\">\n" +
-    "              	<div ng-non-bindable=\"\">\n" +
-    "                  <!-- begin table -->\n" +
-    "                  <table class=\"table table-bordered\">\n" +
-    "                    <thead>\n" +
-    "                      <tr>\n" +
-    "                        <th ng-repeat=\"(key, value) in marker.details\">{{key}}</th>\n" +
-    "                      </tr>\n" +
-    "                    </thead>\n" +
-    "                    <tbody>\n" +
-    "                      <tr>\n" +
-    "                        <td ng-repeat=\"(key, value) in marker.details\">{{value.value || \"N/A\"}}</td>\n" +
-    "                      </tr>\n" +
-    "                    </tbody>\n" +
-    "                  </table>\n" +
-    "               </div>\n" +
-    "          	</info-window>\n" +
-    "		</div>\n" +
-    "        <heatmap-layer ng-if=\"$ctrl.heatmap\"></heatmap-layer>     \n" +
-    "		</ng-map>\n" +
-    "          \n" +
-    "        <div  class=\"messages\" ng-show=\"$ctrl.drawingMessages != null\">\n" +
-    "            <div class=\"alert alert-warning\">\n" +
-    "              {{$ctrl.drawingMessages}}\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div  class=\"heatmap\" ng-if=\"$ctrl.heatmap == true\">\n" +
-    "                <h5>Enable Heatmap</h5>\n" +
-    "                  <span>\n" +
-    "                    <scriptr-toggle-switch resize=\"false\" on-switch-change=\"$ctrl.activateHeatMap\" switch-status=\"$ctrl.switchStatus\"class=\"switch-success switch-small\"></scriptr-toggle-switch>\n" +
-    "                  </span>\n" +
-    "        </div>         \n" +
-    "        <div ng-if=\"$ctrl.geofenceManager == true\" class=\"drawingmanager-buttons\">\n" +
-    "            <span>\n" +
-    "              <a ng-click=\"$ctrl.removeGeofence()\" data-toggle=\"tooltip\" title=\"Delete geofence\" data-placement=\"bottom\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a>\n" +
-    "              <a  ng-click=\"$ctrl.saveGeofence()\" data-toggle=\"tooltip\" title=\"Save geofence\" data-placement=\"bottom\"><i class=\"fa fa-floppy-o\" aria-hidden=\"true\"></i></a>\n" +
-    "              <a type=\"button\" data-toggle=\"tooltip\" title=\"Locate geofence\" ng-click=\"$ctrl.focusGeofence()\" data-placement=\"bottom\"><i class=\"fa fa-location-arrow\" aria-hidden=\"true\"></i></a>\n" +
-    "              <a type=\"button\" data-toggle=\"tooltip\" title=\"Locate vehicle\" ng-click=\"$ctrl.focusVehicle()\" data-placement=\"bottom\"><i class=\"fa fa-car aria-hidden=\"true\"></i> </a>\n" +
-    "            </span>\n" +
-    "      </div>\n" +
-    "	</section>\n" +
-    "</div>\n"
+    "<div style=\"height: 90%;\"> \r" +
+    "\n" +
+    "    <section class=\"map-wrap\" ng-if=\"$ctrl.clusteredView == true || $ctrl.showDetailedMap == false\">\r" +
+    "\n" +
+    "        <ng-map id=\"{{'clustered-'+$ctrl.$wdgid}}\" on-zoom_changed=\"$ctrl.onClusteredZoomChanged();\"\r" +
+    "\n" +
+    "                single-info-window=\"true\" zoom-to-inlude-markers=\"true\"\r" +
+    "\n" +
+    "                center=\"{{$ctrl.mapcenter || $ctrl.defaultCenter}}\"\r" +
+    "\n" +
+    "                zoom=\"{{$ctrl.clusterZoom}}\">\r" +
+    "\n" +
+    "            <heatmap-layer ng-if=\"$ctrl.heatmap\"></heatmap-layer>\r" +
+    "\n" +
+    "        </ng-map>\r" +
+    "\n" +
+    "          <div  class=\"heatmap\" ng-if=\"$ctrl.heatmap == true\">\r" +
+    "\n" +
+    "                <h5>Enable Heatmap</h5>\r" +
+    "\n" +
+    "                  <span>\r" +
+    "\n" +
+    "                    <scriptr-toggle-switch resize=\"false\" on-switch-change=\"$ctrl.activateHeatMap\" switch-status=\"$ctrl.switchStatus\"class=\"switch-success switch-small\"></scriptr-toggle-switch>\r" +
+    "\n" +
+    "                  </span>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </section>\r" +
+    "\n" +
+    "	<section class=\"map-wrap\" ng-if=\"$ctrl.clusteredView == false || $ctrl.showDetailedMap == true\">\r" +
+    "\n" +
+    "		<ng-map id=\"{{'detailed-'+$ctrl.$wdgid}}\" on-zoom_changed=\"$ctrl.onDetailedZoomChanged();\"\r" +
+    "\n" +
+    "			single-info-window=\"true\" zoom-to-inlude-markers=\"true\"\r" +
+    "\n" +
+    "			center=\"{{$ctrl.mapcenter || $ctrl.defaultcenter}}\"\r" +
+    "\n" +
+    "			zoom=\"{{$ctrl.detailedmapzoom}}\">\r" +
+    "\n" +
+    "            <drawing-manager ng-if=\"$ctrl.geofenceManager == true\"\r" +
+    "\n" +
+    "                on-overlaycomplete=\"$ctrl.onMapOverlayCompleted()\"\r" +
+    "\n" +
+    "                drawing-control-options=\"{{$ctrl.drawingOptions}}\"\r" +
+    "\n" +
+    "                drawingControl=\"{{$ctrl.drawingControl}}\"\r" +
+    "\n" +
+    "                drawingMode=\"null\"\r" +
+    "\n" +
+    "                rectangleOptions=\"{{$ctrl.overlaySettings}}\"\r" +
+    "\n" +
+    "               >\r" +
+    "\n" +
+    "              </drawing-manager>\r" +
+    "\n" +
+    "		<div>\r" +
+    "\n" +
+    "			<div ng-repeat=\"(key, asset) in $ctrl.displayedAssets\">\r" +
+    "\n" +
+    "				<shape name=\"polyline\" path=\"{{asset.path}}\"\r" +
+    "\n" +
+    "					stroke-color=\"{{asset.pathColor}}\"\r" +
+    "\n" +
+    "					stroke-opacity=\"{{asset.strokeOpacity}}\"\r" +
+    "\n" +
+    "					stroke-width=\"{{asset.strokeWeight}}\" icons=\"{{asset.pathIcon}}\">\r" +
+    "\n" +
+    "				</shape>\r" +
+    "\n" +
+    "				<div ng-repeat=\"marker in asset.markers track by $index\">\r" +
+    "\n" +
+    "					<div ng-if=\"$ctrl.trackedAsset == null\">\r" +
+    "\n" +
+    "						<marker position=\"{{marker.position}}\" title=\"{{marker.display}}\" animation={{marker.animation}}\r" +
+    "\n" +
+    "							icon=\"{{marker.icon}}\"\r" +
+    "\n" +
+    "							on-click=\"$ctrl.showAssetInfo(event, marker, '{{marker.assetKey}}', '{{marker.tripKey}}', '{{marker.id}}')\">\r" +
+    "\n" +
+    "						</marker>\r" +
+    "\n" +
+    "					</div>\r" +
+    "\n" +
+    "					<div ng-if=\"$ctrl.trackedAsset !=null\">\r" +
+    "\n" +
+    "						<marker position=\"{{marker.position}}\" title=\"{{marker.title}}\" animation={{marker.animation}}\r" +
+    "\n" +
+    "							icon=\"{{marker.icon}}\" clickable=\"false\">\r" +
+    "\n" +
+    "					</div>\r" +
+    "\n" +
+    "				</div>\r" +
+    "\n" +
+    "				<!-- end trip markers loop -->\r" +
+    "\n" +
+    "			</div>\r" +
+    "\n" +
+    "		</div>\r" +
+    "\n" +
+    "        <div ng-if=\"$ctrl.selectedAsset != null && $ctrl.markerInfoWindow == true\"  >\r" +
+    "\n" +
+    "			<div ng-transclude></div>\r" +
+    "\n" +
+    "          	<info-window id=\"{{'infoWindowTemplate_default_'+$ctrl.$wdgid}}\">\r" +
+    "\n" +
+    "              	<div ng-non-bindable=\"\">\r" +
+    "\n" +
+    "                  <!-- begin table -->\r" +
+    "\n" +
+    "                  <table class=\"table table-bordered\">\r" +
+    "\n" +
+    "                    <thead>\r" +
+    "\n" +
+    "                      <tr>\r" +
+    "\n" +
+    "                        <th ng-repeat=\"(key, value) in marker.details\">{{key}}</th>\r" +
+    "\n" +
+    "                      </tr>\r" +
+    "\n" +
+    "                    </thead>\r" +
+    "\n" +
+    "                    <tbody>\r" +
+    "\n" +
+    "                      <tr>\r" +
+    "\n" +
+    "                        <td ng-repeat=\"(key, value) in marker.details\">{{value.value || \"N/A\"}}</td>\r" +
+    "\n" +
+    "                      </tr>\r" +
+    "\n" +
+    "                    </tbody>\r" +
+    "\n" +
+    "                  </table>\r" +
+    "\n" +
+    "               </div>\r" +
+    "\n" +
+    "          	</info-window>\r" +
+    "\n" +
+    "		</div>\r" +
+    "\n" +
+    "        <heatmap-layer ng-if=\"$ctrl.heatmap\"></heatmap-layer>     \r" +
+    "\n" +
+    "		</ng-map>\r" +
+    "\n" +
+    "          \r" +
+    "\n" +
+    "        <div  class=\"messages\" ng-show=\"$ctrl.drawingMessages != null\">\r" +
+    "\n" +
+    "            <div class=\"alert alert-warning\">\r" +
+    "\n" +
+    "              {{$ctrl.drawingMessages}}\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div  class=\"heatmap\" ng-if=\"$ctrl.heatmap == true\">\r" +
+    "\n" +
+    "                <h5>Enable Heatmap</h5>\r" +
+    "\n" +
+    "                  <span>\r" +
+    "\n" +
+    "                    <scriptr-toggle-switch resize=\"false\" on-switch-change=\"$ctrl.activateHeatMap\" switch-status=\"$ctrl.switchStatus\"class=\"switch-success switch-small\"></scriptr-toggle-switch>\r" +
+    "\n" +
+    "                  </span>\r" +
+    "\n" +
+    "        </div>         \r" +
+    "\n" +
+    "        <div ng-if=\"$ctrl.geofenceManager == true\" class=\"drawingmanager-buttons\">\r" +
+    "\n" +
+    "            <span>\r" +
+    "\n" +
+    "              <a ng-click=\"$ctrl.removeGeofence()\" data-toggle=\"tooltip\" title=\"Delete geofence\" data-placement=\"bottom\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a>\r" +
+    "\n" +
+    "              <a  ng-click=\"$ctrl.saveGeofence()\" data-toggle=\"tooltip\" title=\"Save geofence\" data-placement=\"bottom\"><i class=\"fa fa-floppy-o\" aria-hidden=\"true\"></i></a>\r" +
+    "\n" +
+    "              <a type=\"button\" data-toggle=\"tooltip\" title=\"Locate geofence\" ng-click=\"$ctrl.focusGeofence()\" data-placement=\"bottom\"><i class=\"fa fa-location-arrow\" aria-hidden=\"true\"></i></a>\r" +
+    "\n" +
+    "              <a type=\"button\" data-toggle=\"tooltip\" title=\"Locate vehicle\" ng-click=\"$ctrl.focusVehicle()\" data-placement=\"bottom\"><i class=\"fa fa-car aria-hidden=\"true\"></i> </a>\r" +
+    "\n" +
+    "            </span>\r" +
+    "\n" +
+    "      </div>\r" +
+    "\n" +
+    "	</section>\r" +
+    "\n" +
+    "</div>\r" +
+    "\n"
   );
 
 
