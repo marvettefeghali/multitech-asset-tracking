@@ -168,13 +168,15 @@
              <!--added -->
              
              
-             <li class="myItem" gridster-item='{sizeX: 3, sizeY: 1, col: 0 , row: 2 }'>
+             <li class="myItem" gridster-item='{sizeX: 3, sizeY: 1, col: 0 , row: 1 }'>
                  <div class="box">
                      <div class="box-content">
                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Temperature" class="box-label">Temperature</div>
                          <div  style="height: calc(100% - 30px)" > 
                              <scriptr-chart
+                                            angle='45'
                                             type='line'
+                                            resize='true'
                                             boxLabel='Temperature'
                                             xkey='creationDate'
                                             ykeys='["temperature"]'
@@ -221,6 +223,7 @@
                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Pressure" class="box-label">Pressure</div>
                          <div  style="height: calc(100% - 30px)" > 
                              <scriptr-chart
+                                            angle='45'
                                             type='line'
                                             boxLabel='Pressure'
                                             xkey='creationDate'
@@ -261,12 +264,13 @@
                      </div>
                  </div>
              </li>
-             <li class="myItem" gridster-item='{sizeX: 3, sizeY: 1, col: 0 , row: 2 }'>
+             <li class="myItem" gridster-item='{sizeX: 3, sizeY: 1, col: 0 , row: 3 }'>
                  <div class="box">
                      <div class="box-content">
                          <div  style="height: 30px;" tooltip-placement="bottom" uib-tooltip="Luminosity" class="box-label">Luminosity</div>
                          <div  style="height: calc(100% - 30px)" > 
                              <scriptr-chart
+                                            angle='45'
                                             type='line'
                                             boxLabel='Luminosity'
                                             xkey='creationDate'
